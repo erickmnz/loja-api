@@ -2,7 +2,9 @@ package com.nu.loja.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.nu.loja.entities.enums.OrderStatus;
 
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,7 +33,9 @@ public class Order implements Serializable{
 	@JoinColumn(name="client_id")
 	private User client;
 	private Integer status;
-
+	@OneToMany(mappedBy="id.order")
+	private Set<OrderItem> items = new HashSet<>();
+	
 	
 	public Order() {}
 
@@ -80,7 +85,9 @@ public class Order implements Serializable{
 		this.client = client;
 	}
 
-	
+	public Set<OrderItem> getItems(){
+		return items;
+	}
 	
 	
 	
